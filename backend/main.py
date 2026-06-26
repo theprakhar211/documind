@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from database import connect_db, close_db
-from routers import documents, qa
+from routers import documents, qa, eval as eval_router
 import os
 
 
@@ -33,6 +33,7 @@ app.add_middleware(
 
 app.include_router(documents.router, prefix="/documents", tags=["Documents"])
 app.include_router(qa.router, prefix="/qa", tags=["Q&A"])
+app.include_router(eval_router.router, prefix="/qa", tags=["Eval"])
 
 
 @app.api_route("/health", methods=["GET", "HEAD"])
