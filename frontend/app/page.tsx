@@ -211,6 +211,16 @@ function ChatView({ docId, filename, onReset }: { docId: string; filename: strin
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  const handleDelete = async () => {
+    try {
+      await fetch(`${API}/documents/document/${docId}`, { method: 'DELETE' })
+    } catch (e) {
+      console.error('Delete failed', e)
+    } finally {
+      onReset()
+    }
+  }
+
   const send = async () => {
     const question = input.trim()
     if (!question || loading) return
@@ -218,8 +228,6 @@ function ChatView({ docId, filename, onReset }: { docId: string; filename: strin
     setLoading(true)
 
     setMessages(prev => [...prev, { role: 'user', content: question }])
-
-    const assistantIndex = messages.length + 1
     setMessages(prev => [...prev, { role: 'assistant', content: '', streaming: true }])
 
     try {
@@ -290,16 +298,32 @@ function ChatView({ docId, filename, onReset }: { docId: string; filename: strin
             📄 {filename}
           </span>
         </div>
-        <button
-          onClick={onReset}
-          style={{
-            fontSize: '0.8rem', color: 'var(--text-secondary)',
-            background: 'none', border: '1px solid var(--border)',
-            borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer',
-          }}
-        >
-          New document
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={handleDelete}
+            style={{
+              fontSize: '0.8rem',
+              color: 'var(--error)',
+              background: 'none',
+              border: '1px solid var(--error)',
+              borderRadius: '8px',
+              padding: '0.4rem 0.75rem',
+              cursor: 'pointer',
+            }}
+          >
+            Delete document
+          </button>
+          <button
+            onClick={onReset}
+            style={{
+              fontSize: '0.8rem', color: 'var(--text-secondary)',
+              background: 'none', border: '1px solid var(--border)',
+              borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer',
+            }}
+          >
+            New document
+          </button>
+        </div>
       </div>
 
       {/* Messages */}

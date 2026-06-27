@@ -247,10 +247,13 @@ This is why DocuMind correctly declines questions like "What is the ATS score of
 
 ## Roadmap
 
-- [ ] RAGAS eval endpoint — automated retrieval quality scoring (context recall, answer faithfulness)
+- [x] RAG pipeline — PDF upload, chunking, embedding, vector search
+- [x] Streaming Q&A — SSE token streaming with source citations
+- [x] RAGAS-style eval endpoint — context recall, answer faithfulness, answer relevance
+- [x] Document deletion — remove vectors from Qdrant
 - [ ] Multi-document support — ask across multiple uploaded PDFs
 - [ ] OCR fallback — handle scanned PDFs via Tesseract
-- [ ] Persistent sessions — save doc_id to localStorage so uploads survive refresh
+- [ ] Persistent sessions — save doc_id to localStorage
 - [ ] Whisper transcription — ask questions by voice
 
 ---
