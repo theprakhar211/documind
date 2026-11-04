@@ -16,8 +16,8 @@ class Settings(BaseSettings):
     embedding_model: str = "all-MiniLM-L6-v2"
 
     # Groq models
-    groq_smart_model: str = "llama-3.3-70b-versatile"
-    groq_fast_model: str = "llama-3.1-8b-instant"
+    groq_smart_model: str = "openai/gpt-oss-120b"
+    groq_fast_model: str = "openai/gpt-oss-20b"
 
     class Config:
         env_file = ".env"

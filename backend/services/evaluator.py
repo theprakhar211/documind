@@ -79,9 +79,9 @@ Respond ONLY with valid JSON in this exact format:
 
     try:
         response = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model=settings.groq_fast_model,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=100,
+            max_tokens=1000,
             temperature=0.0,
         )
         result = json.loads(response.choices[0].message.content.strip())
@@ -153,9 +153,9 @@ ANSWER:"""
 
         try:
             response = groq_client.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model=settings.groq_fast_model,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=300,
+                max_tokens=1000,
                 temperature=0.1,
             )
             answer = response.choices[0].message.content.strip()
