@@ -1,19 +1,19 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
-from sentence_transformers import SentenceTransformer
+from services.embedding_model import Embedder
 from loguru import logger
 from config import settings
 
 # Single shared instances — imported everywhere
 client: QdrantClient = None
-embedder: SentenceTransformer = None
+embedder: Embedder = None
 
 
 def get_client() -> QdrantClient:
     return client
 
 
-def get_embedder() -> SentenceTransformer:
+def get_embedder() -> Embedder:
     return embedder
 
 
@@ -49,7 +49,7 @@ async def connect_db():
     logger.info("Payload index created on doc_id.")
 
     logger.info("Loading embedding model...")
-    embedder = SentenceTransformer(settings.embedding_model)
+    embedder = Embedder(settings.embedding_model)
     logger.info("Embedding model loaded.")
 
 

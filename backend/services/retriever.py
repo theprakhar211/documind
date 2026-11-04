@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue, QueryRequest
-from sentence_transformers import SentenceTransformer
+from services.embedding_model import Embedder
 from loguru import logger
 
 
@@ -8,7 +8,7 @@ def retrieve_chunks(
     query: str,
     doc_id: str,
     client: QdrantClient,
-    embedder: SentenceTransformer,
+    embedder: Embedder,
     collection_name: str,
     top_k: int = 5,
 ) -> list[dict]:

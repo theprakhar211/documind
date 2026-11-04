@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     chunk_overlap: int = 64
 
     # Embedding model
-    embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
 
     # Groq models
     groq_smart_model: str = "openai/gpt-oss-120b"

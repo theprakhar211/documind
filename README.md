@@ -4,7 +4,7 @@
 
 DocuMind is a production-grade Retrieval-Augmented Generation (RAG) system. Upload any PDF, ask questions in natural language, and get answers that stream in token-by-token — with exact source citations showing which passage the answer came from and how relevant it was.
 
-**Stack:** FastAPI · Qdrant · sentence-transformers · Groq · Next.js · Docker
+**Stack:** FastAPI · Qdrant · FastEmbed (ONNX) · Groq · Next.js · Docker
 
 ---
 
@@ -64,7 +64,7 @@ User question
 
 **Honest retrieval** — if no relevant chunks are found, the system says so rather than hallucinating. The prompt explicitly instructs the LLM to only answer from provided context.
 
-**Local embeddings** — `all-MiniLM-L6-v2` runs inside the Docker container. Zero embedding API calls, zero per-token cost, zero latency on the embed step.
+**Local embeddings** — `all-MiniLM-L6-v2` runs inside the Docker container through FastEmbed (ONNX runtime, no PyTorch). Zero embedding API calls and zero per-token cost.
 
 ---
 
@@ -75,7 +75,7 @@ User question
 | Frontend | Next.js 16, Tailwind CSS |
 | Backend | FastAPI (Python 3.11) |
 | Vector DB | Qdrant Cloud (free tier) |
-| Embeddings | sentence-transformers — all-MiniLM-L6-v2 (local) |
+| Embeddings | FastEmbed (ONNX) — all-MiniLM-L6-v2 (local) |
 | LLM | Groq API — Llama 3.3 70B |
 | PDF parsing | PyMuPDF |
 | Streaming | Server-Sent Events (SSE) |
@@ -141,7 +141,7 @@ ENVIRONMENT=development
 docker compose up --build
 ```
 
-First build takes 5–8 minutes (downloads sentence-transformers + torch). Subsequent runs take ~15 seconds.
+First build takes a few minutes (installs dependencies and downloads the embedding model). Subsequent runs are much faster.
 
 Wait for:
 ```

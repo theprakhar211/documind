@@ -1,5 +1,5 @@
 from groq import Groq
-from sentence_transformers import SentenceTransformer
+from services.embedding_model import Embedder
 from services.retriever import retrieve_chunks
 from qdrant_client import QdrantClient
 from loguru import logger
@@ -23,7 +23,7 @@ def score_context_recall(
     question: str,
     ground_truth: str,
     chunks: list[dict],
-    embedder: SentenceTransformer,
+    embedder: Embedder,
 ) -> float:
     """
     Context recall: does the retrieved context contain enough
@@ -94,7 +94,7 @@ Respond ONLY with valid JSON in this exact format:
 def score_answer_relevance(
     question: str,
     answer: str,
-    embedder: SentenceTransformer,
+    embedder: Embedder,
 ) -> float:
     """
     Answer relevance: does the answer actually address the question?
@@ -111,7 +111,7 @@ def run_eval(
     test_cases: list[dict],
     doc_id: str,
     client: QdrantClient,
-    embedder: SentenceTransformer,
+    embedder: Embedder,
     collection_name: str,
 ) -> dict:
     """

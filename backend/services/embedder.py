@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
-from sentence_transformers import SentenceTransformer
+from services.embedding_model import Embedder
 from loguru import logger
 import uuid
 
@@ -10,7 +10,7 @@ def embed_and_store(
     doc_id: str,
     filename: str,
     client: QdrantClient,
-    embedder: SentenceTransformer,
+    embedder: Embedder,
     collection_name: str,
 ) -> int:
     """
